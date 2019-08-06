@@ -10,7 +10,12 @@
 		"type": "git",
 		"url": "git+https://github.com/estebansolo/Indecision.git"
 	},
-	"keywords": [ "React", "Javascript", "Course", "Indecision" ],
+	"keywords": [
+		"React",
+		"Javascript",
+		"Course",
+		"Indecision"
+	],
 	"author": "Esteban Solorzano",
 	"license": "MIT",
 	"bugs": {

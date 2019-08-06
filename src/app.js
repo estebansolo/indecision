@@ -2,16 +2,47 @@ class IndecisionApp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			options: []
+			options: props.options
 		};
 
 		this.handlePick = this.handlePick.bind(this);
 		this.handleAddOption = this.handleAddOption.bind(this);
 		this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+		this.handleDeleteSingleOption = this.handleDeleteSingleOption.bind(this);
+	}
+
+	componentDidMount() {
+		try {
+			const json = localStorage.getItem('indecisionOptions');
+			const options = JSON.parse(json);
+			if (options) {
+				this.setState({ options });
+			}
+		} catch (error) {
+			console.log('Nothing but error');
+		}
+
+		console.log('fetching data');
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.options.length !== this.state.options.length) {
+			const json = JSON.stringify(this.state.options);
+			localStorage.setItem('indecisionOptions', json);
+		}
+		console.log('saving data');
+	}
+
+	componentWillUnmount() {
+		console.log('Component Will Unmount');
 	}
 
 	handleDeleteOptions() {
 		this.setState({ options: [] });
+	}
+
+	handleDeleteSingleOption(option) {
+		this.setState({ options: this.state.options.filter((opt) => opt !== option) });
 	}
 
 	handlePick() {
@@ -27,65 +58,69 @@ class IndecisionApp extends React.Component {
 			return 'This option already exists';
 		}
 
-		this.setState((prevState) => {
-			return {
-				options: prevState.options.concat([ option ])
-			};
-		});
+		this.setState({ options: this.state.options.concat([ option ]) });
 	}
 
 	render() {
-		const title = 'Indecision App';
-		const subtitle = 'Put your life in the hands of a computer';
-
 		return (
 			<React.Fragment>
-				<Header title={title} subtitle={subtitle} />
+				<Header />
 				<Action hasOptions={this.state.options.length == 0} randomPick={this.handlePick} />
-				<Options options={this.state.options} deleteOptions={this.handleDeleteOptions} />
+				<Options
+					options={this.state.options}
+					deleteOptions={this.handleDeleteOptions}
+					handleDeleteSingleOption={this.handleDeleteSingleOption}
+				/>
 				<AddOption handleAddOption={this.handleAddOption} />
 			</React.Fragment>
 		);
 	}
 }
 
-class Header extends React.Component {
-	render() {
-		return (
-			<div>
-				<h1>{this.props.title}</h1>
-				<h2>{this.props.subtitle}</h2>
-			</div>
-		);
-	}
-}
+IndecisionApp.defaultProps = {
+	options: []
+};
 
-class Action extends React.Component {
-	render() {
-		return (
-			<button disabled={this.props.hasOptions} onClick={this.props.randomPick}>
-				What should I do?
-			</button>
-		);
-	}
-}
+const Header = ({ title, subtitle }) => {
+	return (
+		<div>
+			<h1>{title}</h1>
+			{subtitle && <h2>{subtitle}</h2>}
+		</div>
+	);
+};
 
-class Options extends React.Component {
-	render() {
-		return (
-			<div>
-				<button onClick={this.props.deleteOptions}>Remove All</button>
-				{this.props.options.map((option) => <Option key={option} text={option} />)}
-			</div>
-		);
-	}
-}
+Header.defaultProps = {
+	title: 'Indecision',
+	subtitle: 'Put your life in the hands of a computer'
+};
 
-class Option extends React.Component {
-	render() {
-		return <div>{this.props.text}</div>;
-	}
-}
+const Action = ({ hasOptions, randomPick }) => {
+	return (
+		<button disabled={hasOptions} onClick={randomPick}>
+			What should I do?
+		</button>
+	);
+};
+
+const Options = ({ deleteOptions, options, handleDeleteSingleOption }) => {
+	return (
+		<div>
+			<button onClick={deleteOptions}>Remove All</button>
+			{options.length === 0 && <p>Please add an option to get started!</p>}
+			{options.map((option) => (
+				<Option key={option} text={option} deleteSingleOption={handleDeleteSingleOption} />
+			))}
+		</div>
+	);
+};
+
+const Option = ({ text, deleteSingleOption }) => (
+	<div>
+		{text}
+		<button onClick={() => deleteSingleOption(text)}>remove</button>
+	</div>
+);
 
 class AddOption extends React.Component {
 	constructor(props) {
@@ -103,7 +138,7 @@ class AddOption extends React.Component {
 		const error = this.props.handleAddOption(option);
 
 		this.setState({ error });
-		e.target.elements.option.value = '';
+		if (!error) e.target.elements.option.value = '';
 	}
 
 	render() {
