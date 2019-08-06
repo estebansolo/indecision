@@ -4,18 +4,14 @@
 	"description": "A react application to randomly choose one of several options provided above.",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"serve": "live-server public/",
+		"build": "npx babel src/app.js --out-file=public/scripts/app.js --presets=@babel/env,@babel/react --watch"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/estebansolo/Indecision.git"
 	},
-	"keywords": [
-		"React",
-		"Javascript",
-		"Course",
-		"Indecision"
-	],
+	"keywords": [ "React", "Javascript", "Course", "Indecision" ],
 	"author": "Esteban Solorzano",
 	"license": "MIT",
 	"bugs": {
@@ -26,7 +22,8 @@
 		"@babel/cli": "^7.5.5",
 		"@babel/core": "^7.5.5",
 		"@babel/preset-env": "^7.5.5",
-		"@babel/preset-react": "^7.0.0"
+		"@babel/preset-react": "^7.0.0",
+		"live-server": "^1.2.1"
 	},
 	"dependencies": {}
 }
