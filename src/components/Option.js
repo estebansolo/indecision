@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-export const Option = ({ text, deleteSingleOption }) => (
-	<div>
-		{text}
-		<button onClick={() => deleteSingleOption(text)}>remove</button>
+export const Option = ({ text, count, deleteSingleOption }) => (
+	<div className="option">
+		<p className="option__text">
+			{count}. {text}
+		</p>
+		<button className="button button--link" onClick={() => deleteSingleOption(text)}>
+			remove
+		</button>
 	</div>
 );

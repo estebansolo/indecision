@@ -70,13 +70,17 @@ class Indecision extends React.Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<Action hasOptions={this.state.options.length == 0} randomPick={this.handlePick} />
-				<Options
-					options={this.state.options}
-					deleteOptions={this.handleDeleteOptions}
-					handleDeleteSingleOption={this.handleDeleteSingleOption}
-				/>
-				<AddOption handleAddOption={this.handleAddOption} />
+				<div className="container">
+					<Action hasOptions={this.state.options.length == 0} randomPick={this.handlePick} />
+					<div className="widget">
+						<Options
+							options={this.state.options}
+							deleteOptions={this.handleDeleteOptions}
+							handleDeleteSingleOption={this.handleDeleteSingleOption}
+						/>
+						<AddOption handleAddOption={this.handleAddOption} />
+					</div>
+				</div>
 				<OptionModal
 					selectedOption={this.state.selectedOption}
 					handleClearSelectedOption={this.handleClearSelectedOption}
