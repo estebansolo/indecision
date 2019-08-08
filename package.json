@@ -5,13 +5,19 @@
 	"main": "index.js",
 	"scripts": {
 		"serve": "live-server public/",
-		"build": "npx babel src/app.js --out-file=public/scripts/app.js --presets=@babel/env,@babel/react --watch"
+		"build": "webpack --watch",
+		"build-babel": "npx babel src/app.js --out-file=public/scripts/app.js --presets=@babel/env,@babel/react --watch"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/estebansolo/Indecision.git"
 	},
-	"keywords": [ "React", "Javascript", "Course", "Indecision" ],
+	"keywords": [
+		"React",
+		"Javascript",
+		"Course",
+		"Indecision"
+	],
 	"author": "Esteban Solorzano",
 	"license": "MIT",
 	"bugs": {
@@ -23,7 +29,13 @@
 		"@babel/core": "^7.5.5",
 		"@babel/preset-env": "^7.5.5",
 		"@babel/preset-react": "^7.0.0",
-		"live-server": "^1.2.1"
+		"babel-loader": "^8.0.6",
+		"live-server": "^1.2.1",
+		"webpack": "^4.39.1",
+		"webpack-cli": "^3.3.6"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"react": "^16.8.6",
+		"react-dom": "^16.8.6"
+	}
 }
