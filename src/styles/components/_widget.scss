@@ -1,6 +1,6 @@
 .widget {
 	background-color: $light-blue;
-	margin-bottom: $xl-size;
+	margin-bottom: $m-size;
 }
 
 .widget-message {
@@ -12,7 +12,7 @@
 }
 
 .widget-header {
-	background-color: $blue;
+	background-color: $off-black;
 	color: $off-white;
 	display: flex;
 	justify-content: space-between;

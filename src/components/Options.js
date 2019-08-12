@@ -2,7 +2,7 @@ import React from 'react';
 import { Option } from './Option';
 
 export const Options = ({ deleteOptions, options, handleDeleteSingleOption }) => (
-	<div>
+	<React.Fragment>
 		<div className="widget-header">
 			<h3 className="widget-header__title">Your Options</h3>
 			<button className="button button--link" onClick={deleteOptions}>
@@ -13,5 +13,5 @@ export const Options = ({ deleteOptions, options, handleDeleteSingleOption }) =>
 		{options.map((option, index) => (
 			<Option key={index} count={index + 1} text={option} deleteSingleOption={handleDeleteSingleOption} />
 		))}
-	</div>
+	</React.Fragment>
 );

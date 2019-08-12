@@ -46,8 +46,8 @@ class Indecision extends React.Component {
 		this.setState({ selectedOption: undefined });
 	};
 
-	handleDeleteSingleOption = (option) => {
-		this.setState({ options: this.state.options.filter((opt) => opt !== option) });
+	handleDeleteSingleOption = option => {
+		this.setState({ options: this.state.options.filter(opt => opt !== option) });
 	};
 
 	handlePick = () => {
@@ -56,29 +56,35 @@ class Indecision extends React.Component {
 		this.setState({ selectedOption: option });
 	};
 
-	handleAddOption = (option) => {
+	handleAddOption = option => {
 		if (!option) {
 			return 'Enter valid value to add item';
 		} else if (this.state.options.indexOf(option) !== -1) {
 			return 'This option already exists';
 		}
 
-		this.setState({ options: this.state.options.concat([ option ]) });
+		this.setState({ options: this.state.options.concat([option]) });
 	};
 
 	render() {
 		return (
 			<React.Fragment>
 				<Header />
-				<div className="container">
-					<Action hasOptions={this.state.options.length == 0} randomPick={this.handlePick} />
-					<div className="widget">
-						<Options
-							options={this.state.options}
-							deleteOptions={this.handleDeleteOptions}
-							handleDeleteSingleOption={this.handleDeleteSingleOption}
-						/>
-						<AddOption handleAddOption={this.handleAddOption} />
+				<div className="full-container">
+					<div className="left-container">
+						<div className="widget">
+							<Options
+								options={this.state.options}
+								deleteOptions={this.handleDeleteOptions}
+								handleDeleteSingleOption={this.handleDeleteSingleOption}
+							/>
+						</div>
+					</div>
+					<div className="right-container">
+						<div className="widget">
+							<Action hasOptions={this.state.options.length == 0} randomPick={this.handlePick} />
+							<AddOption handleAddOption={this.handleAddOption} />
+						</div>
 					</div>
 				</div>
 				<OptionModal
